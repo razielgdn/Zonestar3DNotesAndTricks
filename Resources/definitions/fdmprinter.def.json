@@ -4718,7 +4718,7 @@
                 },
                 "support_tree_angle":
                 {
-                    "label": "Maximum Branch Angle",
+                    "label": "Tree Support Branch Angle",
                     "description": "The maximum angle of the branches while they grow around the model. Use a lower angle to make them more vertical and more stable. Use a higher angle to be able to have more reach.",
                     "unit": "\u00b0",
                     "type": "float",
@@ -4747,7 +4747,7 @@
                 },
                 "support_tree_branch_diameter":
                 {
-                    "label": "Branch Diameter",
+                    "label": "Tree Support Branch Diameter",
                     "description": "The diameter of the thinnest branches of tree support. Thicker branches are more sturdy. Branches towards the base will be thicker than this.",
                     "unit": "mm",
                     "type": "float",
@@ -4761,7 +4761,7 @@
                 },
                 "support_tree_max_diameter":
                 {
-                    "label": "Trunk Diameter",
+                    "label": "Tree Support Trunk Diameter",
                     "description": "The diameter of the widest branches of tree support. A thicker trunk is more sturdy; a thinner trunk takes up less space on the build plate.",
                     "unit": "mm",
                     "type": "float",
@@ -4775,7 +4775,7 @@
                 },
                 "support_tree_branch_diameter_angle":
                 {
-                    "label": "Branch Diameter Angle",
+                    "label": "Tree Support Branch Diameter Angle",
                     "description": "The angle of the branches' diameter as they gradually become thicker towards the bottom. An angle of 0 will cause the branches to have uniform thickness over their length. A bit of an angle can increase stability of the tree support.",
                     "unit": "\u00b0",
                     "type": "float",
@@ -4803,35 +4803,6 @@
                     "enabled": "support_enable and support_structure=='tree' and support_tree_branch_diameter_angle > 0",
                     "settable_per_mesh": false,
                     "settable_per_extruder": true
-
-                },
-                "support_z_seam_away_from_model":
-                {
-                    "label": "Support Z Seam Away from Model",
-                    "description": "Manage the spatial relationship between the z seam of the support structure and the actual 3D model. This control is crucial as it allows users to ensure the seamless removal of support structures post-printing, without inflicting damage or leaving marks on the printed model.",
-                    "type": "bool",
-                    "default_value": true,
-                    "enabled": "support_enable",
-                    "settable_per_mesh": false,
-                    "settable_per_extruder": true,
-                    "settable_per_meshgroup": false,
-                    "children":
-                    {
-                        "support_z_seam_min_distance":
-                        {
-                            "label": "Min Z Seam Distance from Model",
-                            "description": "The distance between the model and its support structure at the z-axis seam.",
-                            "unit": "mm",
-                            "minimum_value": "0.001",
-                            "value": "line_width * 2",
-                            "default_value": 0.8,
-                            "maximum_value_warning": "line_width * 4",
-                            "type": "float",
-                            "enabled": "support_z_seam_away_from_model and support_enable",
-                            "settable_per_mesh": false,
-                            "settable_per_extruder": true
-                        }
-                    }
                 },
                 "support_type":
                 {
@@ -5205,7 +5176,7 @@
                 "support_z_distance":
                 {
                     "label": "Support Z Distance",
-                    "description": "Distance from the top/bottom of the support structure to the print. This gap provides clearance to remove the supports after the model is printed. The topmost support layer below the model might be a fraction of regular layers.",
+                    "description": "Distance from the top/bottom of the support structure to the print. This gap provides clearance to remove the supports after the model is printed. This value is rounded up to a multiple of the layer height.",
                     "unit": "mm",
                     "type": "float",
                     "minimum_value": "0",
@@ -5233,7 +5204,7 @@
                         "support_bottom_distance":
                         {
                             "label": "Support Bottom Distance",
-                            "description": "Distance from the print to the bottom of the support. Note that this is rounded up to the next layer height.",
+                            "description": "Distance from the print to the bottom of the support.",
                             "unit": "mm",
                             "minimum_value": "0",
                             "maximum_value_warning": "machine_nozzle_size",
@@ -6171,8 +6142,8 @@
                 },
                 "brim_inside_margin":
                 {
-                    "label": "Brim Avoid Margin",
-                    "description": "A brim around a model may touch an other model where you don't want it. This removes all brim within this distance from brimless models.",
+                    "label": "Brim Inside Avoid Margin",
+                    "description": "A part fully enclosed inside another part can generate an outer brim that touches the inside of the other part. This removes all brim within this distance from internal holes.",
                     "unit": "mm",
                     "type": "float",
                     "value": "line_width * 4",
@@ -6206,101 +6177,7 @@
                     "enabled": "resolveOrValue('adhesion_type') == 'raft'",
                     "limit_to_extruder": "adhesion_extruder_nr",
                     "settable_per_mesh": false,
-                    "settable_per_extruder": true,
-                    "children":
-                    {
-                        "raft_base_margin":
-                        {
-                            "label": "Raft Base Extra Margin",
-                            "description": "If the raft base is enabled, this is the extra raft area around the model which is also given a raft. Increasing this margin will create a stronger raft while using more material and leaving less area for your print.",
-                            "unit": "mm",
-                            "type": "float",
-                            "value": "raft_margin",
-                            "default_value": 15,
-                            "minimum_value_warning": "raft_interface_line_width",
-                            "maximum_value_warning": "min(raft_interface_margin, 20)",
-                            "enabled": "resolveOrValue('adhesion_type') == 'raft'",
-                            "limit_to_extruder": "raft_base_extruder_nr",
-                            "settable_per_mesh": false,
-                            "settable_per_extruder": true
-                        },
-                        "raft_interface_margin":
-                        {
-                            "label": "Raft Middle Extra Margin",
-                            "description": "If the raft middle is enabled, this is the extra raft area around the model which is also given a raft. Increasing this margin will create a stronger raft while using more material and leaving less area for your print.",
-                            "unit": "mm",
-                            "type": "float",
-                            "value": "raft_margin",
-                            "default_value": 15,
-                            "minimum_value_warning": "raft_interface_line_width",
-                            "maximum_value_warning": "min(raft_surface_margin, 20)",
-                            "enabled": "resolveOrValue('adhesion_type') == 'raft'",
-                            "limit_to_extruder": "raft_interface_extruder_nr",
-                            "settable_per_mesh": false,
-                            "settable_per_extruder": true
-                        },
-                        "raft_surface_margin":
-                        {
-                            "label": "Raft Top Extra Margin",
-                            "description": "If the raft top is enabled, this is the extra raft area around the model which is also given a raft. Increasing this margin will create a stronger raft while using more material and leaving less area for your print.",
-                            "unit": "mm",
-                            "type": "float",
-                            "value": "raft_margin",
-                            "default_value": 15,
-                            "minimum_value_warning": "raft_interface_line_width",
-                            "maximum_value_warning": "20",
-                            "enabled": "resolveOrValue('adhesion_type') == 'raft'",
-                            "limit_to_extruder": "raft_surface_extruder_nr",
-                            "settable_per_mesh": false,
-                            "settable_per_extruder": true
-                        }
-                    }
-                },
-                "raft_remove_inside_corners":
-                {
-                    "label": "Remove Raft Inside Corners",
-                    "description": "Remove inside corners from the raft, causing the raft to become convex.",
-                    "type": "bool",
-                    "default_value": false,
-                    "enabled": "resolveOrValue('adhesion_type') == 'raft'",
-                    "settable_per_mesh": false,
-                    "settable_per_extruder": false,
-                    "children":
-                    {
-                        "raft_base_remove_inside_corners":
-                        {
-                            "label": "Remove Raft Base Inside Corners",
-                            "description": "Remove inside corners from the raft base, causing the raft to become convex.",
-                            "type": "bool",
-                            "value": "raft_remove_inside_corners",
-                            "default_value": false,
-                            "enabled": "resolveOrValue('adhesion_type') == 'raft'",
-                            "settable_per_mesh": false,
-                            "settable_per_extruder": false
-                        },
-                        "raft_interface_remove_inside_corners":
-                        {
-                            "label": "Remove Raft Middle Inside Corners",
-                            "description": "Remove inside corners from the raft middle part, causing the raft to become convex.",
-                            "type": "bool",
-                            "value": "raft_remove_inside_corners",
-                            "default_value": false,
-                            "enabled": "resolveOrValue('adhesion_type') == 'raft'",
-                            "settable_per_mesh": false,
-                            "settable_per_extruder": false
-                        },
-                        "raft_surface_remove_inside_corners":
-                        {
-                            "label": "Remove Raft Top Inside Corners",
-                            "description": "Remove inside corners from the raft top part, causing the raft to become convex.",
-                            "type": "bool",
-                            "value": "raft_remove_inside_corners",
-                            "default_value": false,
-                            "enabled": "resolveOrValue('adhesion_type') == 'raft'",
-                            "settable_per_mesh": false,
-                            "settable_per_extruder": false
-                        }
-                    }
+                    "settable_per_extruder": true
                 },
                 "raft_smoothing":
                 {
@@ -6314,52 +6191,7 @@
                     "enabled": "resolveOrValue('adhesion_type') == 'raft' and not raft_remove_inside_corners",
                     "limit_to_extruder": "adhesion_extruder_nr",
                     "settable_per_mesh": false,
-                    "settable_per_extruder": true,
-                    "children":
-                    {
-                        "raft_base_smoothing":
-                        {
-                            "label": "Raft Base Smoothing",
-                            "description": "This setting controls how much inner corners in the raft base outline are rounded. Inward corners are rounded to a semi circle with a radius equal to the value given here. This setting also removes holes in the raft outline which are smaller than such a circle.",
-                            "unit": "mm",
-                            "type": "float",
-                            "value": "raft_smoothing",
-                            "default_value": 5,
-                            "minimum_value": "0",
-                            "minimum_value_warning": "raft_interface_line_width",
-                            "enabled": "resolveOrValue('adhesion_type') == 'raft' and not raft_base_remove_inside_corners",
-                            "settable_per_mesh": false,
-                            "settable_per_extruder": true
-                        },
-                        "raft_interface_smoothing":
-                        {
-                            "label": "Raft Middle Smoothing",
-                            "description": "This setting controls how much inner corners in the raft middle outline are rounded. Inward corners are rounded to a semi circle with a radius equal to the value given here. This setting also removes holes in the raft outline which are smaller than such a circle.",
-                            "unit": "mm",
-                            "type": "float",
-                            "value": "raft_smoothing",
-                            "default_value": 5,
-                            "minimum_value": "0",
-                            "minimum_value_warning": "raft_interface_line_width",
-                            "enabled": "resolveOrValue('adhesion_type') == 'raft' and not raft_interface_remove_inside_corners",
-                            "settable_per_mesh": false,
-                            "settable_per_extruder": true
-                        },
-                        "raft_surface_smoothing":
-                        {
-                            "label": "Raft Top Smoothing",
-                            "description": "This setting controls how much inner corners in the raft top outline are rounded. Inward corners are rounded to a semi circle with a radius equal to the value given here. This setting also removes holes in the raft outline which are smaller than such a circle.",
-                            "unit": "mm",
-                            "type": "float",
-                            "value": "raft_smoothing",
-                            "default_value": 5,
-                            "minimum_value": "0",
-                            "minimum_value_warning": "raft_interface_line_width",
-                            "enabled": "resolveOrValue('adhesion_type') == 'raft' and not raft_surface_remove_inside_corners",
-                            "settable_per_mesh": false,
-                            "settable_per_extruder": true
-                        }
-                    }
+                    "settable_per_extruder": true
                 },
                 "raft_airgap":
                 {
@@ -6378,7 +6210,7 @@
                 "layer_0_z_overlap":
                 {
                     "label": "Initial Layer Z Overlap",
-                    "description": "Make the first and second layer of the model overlap in the Z direction to compensate for the filament lost in the airgap. All models above the first model layer will be shifted down by this amount.\nIt may be noted that sometimes the second layer is printed below initial layer because of this setting. This is intended behavior",
+                    "description": "Make the first and second layer of the model overlap in the Z direction to compensate for the filament lost in the airgap. All models above the first model layer will be shifted down by this amount.",
                     "unit": "mm",
                     "type": "float",
                     "default_value": 0.22,
@@ -6962,9 +6794,9 @@
                     "unit": "mm",
                     "enabled": "resolveOrValue('prime_tower_enable')",
                     "default_value": 200,
-                    "value": "((resolveOrValue('machine_width') / 2 + resolveOrValue('prime_tower_size') / 2) if resolveOrValue('machine_shape') == 'elliptic' else (resolveOrValue('machine_width') - (resolveOrValue('prime_tower_base_size') if (resolveOrValue('adhesion_type') == 'raft' or resolveOrValue('prime_tower_brim_enable')) else 0) - max(max(extruderValues('travel_avoid_distance')) + max(extruderValues('machine_nozzle_offset_x')) + max(extruderValues('support_offset')) + (extruderValue(skirt_brim_extruder_nr, 'skirt_brim_line_width') * extruderValue(skirt_brim_extruder_nr, 'skirt_line_count') * extruderValue(skirt_brim_extruder_nr, 'initial_layer_line_width_factor') / 100 + extruderValue(skirt_brim_extruder_nr, 'skirt_gap') if resolveOrValue('adhesion_type') == 'skirt' else 0) + (resolveOrValue('draft_shield_dist') if resolveOrValue('draft_shield_enabled') else 0), max(map(abs, extruderValues('machine_nozzle_offset_x'))), 1))) - (resolveOrValue('machine_width') / 2 if resolveOrValue('machine_center_is_zero') else 0)",
-                    "maximum_value": "(machine_width / 2 if machine_center_is_zero else machine_width) - (resolveOrValue('prime_tower_base_size') if (resolveOrValue('adhesion_type') == 'raft' or resolveOrValue('prime_tower_brim_enable')) else 0)",
-                    "minimum_value": "resolveOrValue('prime_tower_size') + (resolveOrValue('prime_tower_base_size') if (resolveOrValue('adhesion_type') == 'raft' or resolveOrValue('prime_tower_brim_enable')) else 0) - (machine_width / 2 if machine_center_is_zero else 0)",
+                    "value": "machine_width - max(extruderValue(skirt_brim_extruder_nr, 'brim_width') * extruderValue(skirt_brim_extruder_nr, 'initial_layer_line_width_factor') / 100 if adhesion_type == 'brim' or (prime_tower_brim_enable and adhesion_type != 'raft') else (extruderValue(adhesion_extruder_nr, 'raft_margin') if adhesion_type == 'raft' else (extruderValue(skirt_brim_extruder_nr, 'skirt_gap') if adhesion_type == 'skirt' else 0)), max(extruderValues('travel_avoid_distance'))) - max(extruderValues('support_offset')) - sum(extruderValues('skirt_brim_line_width')) * extruderValue(skirt_brim_extruder_nr, 'initial_layer_line_width_factor') / 100 - (resolveOrValue('draft_shield_dist') if resolveOrValue('draft_shield_enabled') else 0) - max(map(abs, extruderValues('machine_nozzle_offset_x'))) - 1",
+                    "maximum_value": "machine_width / 2 if machine_center_is_zero else machine_width",
+                    "minimum_value": "resolveOrValue('prime_tower_size') - machine_width / 2 if machine_center_is_zero else resolveOrValue('prime_tower_size')",
                     "settable_per_mesh": false,
                     "settable_per_extruder": false
                 },
@@ -6976,9 +6808,9 @@
                     "unit": "mm",
                     "enabled": "resolveOrValue('prime_tower_enable')",
                     "default_value": 200,
-                    "value": "machine_depth - prime_tower_size - (resolveOrValue('prime_tower_base_size') if (resolveOrValue('adhesion_type') == 'raft' or resolveOrValue('prime_tower_brim_enable')) else 0) - max(max(extruderValues('travel_avoid_distance')) + max(extruderValues('machine_nozzle_offset_y')) + max(extruderValues('support_offset')) + (extruderValue(skirt_brim_extruder_nr, 'skirt_brim_line_width') * extruderValue(skirt_brim_extruder_nr, 'skirt_line_count') * extruderValue(skirt_brim_extruder_nr, 'initial_layer_line_width_factor') / 100 + extruderValue(skirt_brim_extruder_nr, 'skirt_gap') if resolveOrValue('adhesion_type') == 'skirt' else 0) + (resolveOrValue('draft_shield_dist') if resolveOrValue('draft_shield_enabled') else 0), max(map(abs, extruderValues('machine_nozzle_offset_y'))), 1) - (resolveOrValue('machine_depth') / 2 if resolveOrValue('machine_center_is_zero') else 0)",
-                    "maximum_value": "(machine_depth / 2 - resolveOrValue('prime_tower_size') if machine_center_is_zero else machine_depth - resolveOrValue('prime_tower_size')) - (resolveOrValue('prime_tower_base_size') if (resolveOrValue('adhesion_type') == 'raft' or resolveOrValue('prime_tower_brim_enable')) else 0)",
-                    "minimum_value": "(machine_depth / -2 if machine_center_is_zero else 0) + (resolveOrValue('prime_tower_base_size') if (resolveOrValue('adhesion_type') == 'raft' or resolveOrValue('prime_tower_brim_enable')) else 0)",
+                    "value": "machine_depth - prime_tower_size - max(extruderValue(skirt_brim_extruder_nr, 'brim_width') * extruderValue(skirt_brim_extruder_nr, 'initial_layer_line_width_factor') / 100 if adhesion_type == 'brim' or (prime_tower_brim_enable and adhesion_type != 'raft') else (extruderValue(adhesion_extruder_nr, 'raft_margin') if adhesion_type == 'raft' else (extruderValue(skirt_brim_extruder_nr, 'skirt_gap') if adhesion_type == 'skirt' else 0)), max(extruderValues('travel_avoid_distance'))) - max(extruderValues('support_offset')) - sum(extruderValues('skirt_brim_line_width')) * extruderValue(skirt_brim_extruder_nr, 'initial_layer_line_width_factor') / 100 - (resolveOrValue('draft_shield_dist') if resolveOrValue('draft_shield_enabled') else 0) - max(map(abs, extruderValues('machine_nozzle_offset_y'))) - 3",
+                    "maximum_value": "machine_depth / 2 - resolveOrValue('prime_tower_size') if machine_center_is_zero else machine_depth - resolveOrValue('prime_tower_size')",
+                    "minimum_value": "machine_depth / -2 if machine_center_is_zero else 0",
                     "settable_per_mesh": false,
                     "settable_per_extruder": false
                 },
@@ -6995,8 +6827,8 @@
                 "prime_tower_brim_enable":
                 {
                     "value": "resolveOrValue('adhesion_type') in ['raft', 'brim']",
-                    "label": "Prime Tower Base",
-                    "description": "By enabling this setting, your prime-tower will get a brim, even if the model doesn't. If you want a sturdier base for a high tower, you can increase the base height.",
+                    "label": "Prime Tower Brim",
+                    "description": "Prime-towers might need the extra adhesion afforded by a brim even if the model doesn't. Presently can't be used with the 'Raft' adhesion-type.",
                     "type": "bool",
                     "enabled": "resolveOrValue('prime_tower_enable') and (resolveOrValue('adhesion_type') != 'raft')",
                     "resolve": "resolveOrValue('prime_tower_enable') and (resolveOrValue('adhesion_type') in ('none', 'skirt', 'brim'))",
@@ -8707,30 +8539,6 @@
                     "settable_per_extruder": false,
                     "settable_per_mesh": false,
                     "settable_per_meshgroup": false
-                }
-            }
-        },
-                "raft_remove_inside_corners":
-                {
-                    "label": "Remove Raft Inside Corners",
-                    "description": "Remove inside corners from the raft, causing the raft to become convex.",
-                    "type": "bool",
-                    "default_value": false,
-                    "resolve": "any(extruderValues('raft_remove_inside_corners'))",
-                    "enabled": "resolveOrValue('adhesion_type') == 'raft'",
-                    "settable_per_mesh": false,
-                    "settable_per_extruder": false
-                },
-                "raft_base_wall_count":
-                {
-                    "label": "Raft Base Wall Count",
-                    "description": "The number of contours to print around the linear pattern in the base layer of the raft.",
-                    "type": "int",
-                    "default_value": 1,
-                    "enabled": "resolveOrValue('adhesion_type') == 'raft'",
-                    "resolve": "max(extruderValues('raft_base_wall_count'))",
-                    "settable_per_mesh": false,
-                    "settable_per_extruder": false
                 }
             }
         },
