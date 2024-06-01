@@ -15,4 +15,5 @@ Cura resources location:
  In Resources are alocated the updated files that worked for me. 
  
 
-
+to run cura first time in my laptop bench i need to install  libfuse2
+sudo apt install libfuse2
