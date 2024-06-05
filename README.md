@@ -17,3 +17,41 @@ Cura resources location:
 
 to run cura first time in my laptop bench i need to install  libfuse2
 sudo apt install libfuse2
+
+### 06-05-2024
+I configured cura with my arbitrate parameters to print. I test the setups printing a Rapberry pi 4 case. 
+I get the models from [thingiverse](https://www.thingiverse.com/thing:3948992) and the parameter was:
+- **Quality**:
+    - Layer Height: **0.3 mm**
+    - Initial layer height: **0.35mm**
+    - Line width: **0.4mm**
+- **Walls**    
+    - Wall thickness: **0.8mm**
+    - Wall line count: **3**
+- **Infill**
+    - Infill density: **20%**
+    - Infil pattern: **Tri-hexagon**
+- **Material**
+    - Printing temperature: **235**  
+    - Printing temperature: initial layer: **240**
+    - Bed temperature: **70**
+    - Bed temberature initial layer: **75**
+- **Speed**    
+    - Print speed: **37.0 mm/s**
+    - Travel speed: **120**
+- **Travel**
+    - Retraction distance: **12.0mm**
+    - Retraction speed: **30.0mm**
+- **Cooling**
+    - Fan speed: **50%**
+
+The material that I used is PetG of [KingRoon](https://es.aliexpress.com/item/1005004832752591.html?spm=a2g0o.order_list.order_list_main.54.3f15194dMfs7l8&gatewayAdapt=glo2esp) brand with next parameters:
+- Density: **1.24g/cm3**
+- Diameter: **1.75mm**
+- Default printing temperature: **235º C**
+- Retraction distance: **1mm**
+- Retraction Speed: **20mm**
+- Fan Speed: **50%**
+
+
+
