@@ -32,13 +32,13 @@ I get the models from [thingiverse](https://www.thingiverse.com/thing:3948992) a
     - Infill density: **20%**
     - Infil pattern: **Tri-hexagon**
 - **Material**
-    - Printing temperature: **235**  
-    - Printing temperature: initial layer: **240**
-    - Bed temperature: **70**
-    - Bed temberature initial layer: **75**
+    - Printing temperature: **235ºC**  
+    - Printing temperature: initial layer: **240ºC**
+    - Bed temperature: **70ºC**
+    - Bed temberature initial layer: **75ºC**
 - **Speed**    
-    - Print speed: **37.0 mm/s**
-    - Travel speed: **120**
+    - Print speed: **37.0mm/s**
+    - Travel speed: **120mm/s**
 - **Travel**
     - Retraction distance: **12.0mm**
     - Retraction speed: **30.0mm**
@@ -46,7 +46,7 @@ I get the models from [thingiverse](https://www.thingiverse.com/thing:3948992) a
     - Fan speed: **50%**
 
 The material that I used is PetG of [KingRoon](https://es.aliexpress.com/item/1005004832752591.html?spm=a2g0o.order_list.order_list_main.54.3f15194dMfs7l8&gatewayAdapt=glo2esp) brand with next parameters:
-- Density: **1.24g/cm3**
+- Density: **1.24g/cm<sup>3</sup>**
 - Diameter: **1.75mm**
 - Default printing temperature: **235º C**
 - Retraction distance: **1mm**
