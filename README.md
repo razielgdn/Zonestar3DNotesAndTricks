@@ -32,10 +32,10 @@ I get the models from [thingiverse](https://www.thingiverse.com/thing:3948992) a
     - Infill density: **20%**
     - Infil pattern: **Tri-hexagon**
 - **Material**
-    - Printing temperature: **235ºC**  
-    - Printing temperature: initial layer: **240ºC**
-    - Bed temperature: **70ºC**
-    - Bed temberature initial layer: **75ºC**
+    - Printing temperature: **235°C**  
+    - Printing temperature: initial layer: **240°C**
+    - Bed temperature: **70°C**
+    - Bed temberature initial layer: **75°C**
 - **Speed**    
     - Print speed: **37.0mm/s**
     - Travel speed: **120mm/s**
